@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Services\ServiceService;
 use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 use function Illuminate\Log\log;
@@ -19,9 +20,9 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index (Request $request)
     {
-        $services = $this->serviceService->all();
+        $services = $this->serviceService->all($request);
         return self::success(ServiceResource::collection($services), 'لیست سرویس‌ها');
     }
 

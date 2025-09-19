@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Service extends Model
@@ -27,4 +28,23 @@ class Service extends Model
         'created_at',
         'updated_at',
     ];
+
+
+    public function serviceCategory()
+    {
+        return $this->belongsTo(ServiceCategory::class);
+    }
+
+    // public function Provider()
+    // {
+    //     return $this->belongsTo(Provider::class);
+    // }
+
+
+
+    #[Scope]
+    public function active(Builder $query): void
+    {
+        $query->where('is_active', True);
+    }
 }

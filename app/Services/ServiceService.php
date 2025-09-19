@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Service as ServiceModel;
+use Cache;
+use Illuminate\Support\Facades\Cache as FacadesCache;
 
 class ServiceService
 {
@@ -19,11 +21,17 @@ class ServiceService
         }
     }
 
-    public function all()
+    public function all($request)
     {
-        return ServiceModel::all();
+        return cache()->remember('all.services', 3600, function () use ($request) {
+            $query = ServiceModel::query();
+            if ($request->has('filtered_active')) {
+                $query->where('is_active', ($request->filtered_active));
+            }
+            return $query->get();
+        });
     }
-    
+
     public function update(ServiceModel $service, array $data)
     {
         $service->update($data);

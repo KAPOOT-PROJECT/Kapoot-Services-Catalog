@@ -39,4 +39,11 @@ class StoreServiceRequest extends FormRequest
             'updated_at' => 'nullable|date',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        return $this->merge([
+            'base_price' => floatval($this->input('base_price')),
+        ]);
+    }
 }

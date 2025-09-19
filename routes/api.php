@@ -6,4 +6,4 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('services' , ServiceController::class);
-Route::apiResource('servicesCategory', ServiceCategoryController::class);
+Route::apiResource('serviceCategories', ServiceCategoryController::class);
