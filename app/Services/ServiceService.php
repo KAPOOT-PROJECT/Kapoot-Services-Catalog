@@ -25,9 +25,9 @@ class ServiceService
     {
         return cache()->remember('all.services', 3600, function () use ($request) {
             $query = ServiceModel::query();
-            if ($request->has('filtered_active')) {
-                $query->where('is_active', ($request->filtered_active));
-            }
+            $query->when($request->has('filtered_active'), function ($query) use ($request) {
+                $query->where('is_active', $request->filtered_active);
+            });
             return $query->get();
         });
     }
